@@ -14,7 +14,7 @@ export default {
   methods: {
     search() {
       console.log(state.inputUser);
-      state.filterMovies()
+      state.filterTv()
     }
   },
 
