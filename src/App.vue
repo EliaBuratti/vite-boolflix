@@ -18,8 +18,13 @@ export default {
 
   methods: {
     search() {
+      if (state.inputUser === '') {
+        state.getData();
+
+      } else {
+        state.filterTvMovies();
+      }
       console.log(state.inputUser);
-      state.filterTvMovies();
     }
   },
   created() {

@@ -24,7 +24,11 @@ export default {
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
                         <img v-if="film.image" :src="film.image">
-                        <img v-else src="../assets/img/no-image.jpg" alt="no image">
+                        <span v-else>
+                            <h3 v-if="film.title === film.originalTitle">{{ film.originalTitle }}</h3>
+                            <h3 v-else>{{ film.title }}</h3>
+                            <img src="../assets/img/no-image.jpg" alt="no image">
+                        </span>
                     </div>
                     <div class="film_info flip-card-back">
                         <ul class="list-unstyled">
