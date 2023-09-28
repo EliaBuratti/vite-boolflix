@@ -39,6 +39,9 @@ export default {
           <li>titolo: {{ film.title }}</li>
           <li>titolo originale {{ film.original_title }}</li>
           <li>lingua: {{ film.original_language }}</li>
+          <li>bandiera: <img v-if="state.getFlag(film.original_language)" :src="state.getFlag(film.original_language)">
+            <img v-else src="./assets/img/Missing_flag.png" alt="no flag">
+          </li>
           <li>voto: {{ film.vote_average }}</li>
         </ul>
 

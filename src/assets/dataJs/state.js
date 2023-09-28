@@ -43,7 +43,7 @@ export const state = reactive({
 
                 include_adult: this.adultContent,
 
-                language: this.language,
+                //language: this.language,
 
                 page: this.pageNum,
 
@@ -61,5 +61,32 @@ export const state = reactive({
             .catch(error => {
                 console.log(error);
             })
+    },
+
+    getFlag(lang) {
+        let flagLink;
+        switch (lang) {
+            case 'cn':
+                flagLink = false;
+                break;
+
+            case 'mr':
+                flagLink = false;
+                break;
+
+            case 'xx':
+                flagLink = false;
+                break;
+
+            case 'tl':
+                flagLink = false;
+                break;
+
+            default:
+                flagLink = `https://www.unknown.nu/flags/images/${lang}-100`;
+
+        }
+
+        return flagLink;
     }
 })
