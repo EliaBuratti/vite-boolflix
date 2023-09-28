@@ -18,13 +18,15 @@ export default {
 
   methods: {
     search() {
-      if (state.inputUser === '') {
+      if (state.inputUser === '' || state.inputUser === ' ') {
+        state.listMovies = [];
         state.getData();
 
       } else {
         state.filterTvMovies();
       }
       console.log(state.inputUser);
+      state.inputUser = '';
     }
   },
   created() {

@@ -19,7 +19,8 @@ export default {
 }
 </script>
 <template>
-    <Card v-for="film in state.listMovies" :film="film" />
+    <h2 v-if="state.listMovies.length === 0">Nessun risultato per la ricerca.</h2>
+    <Card v-else v-for="film in state.listMovies" :film="film" />
 </template>
 
 
