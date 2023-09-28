@@ -1,5 +1,5 @@
 <script>
-import { state } from '../src/assets/dataJs/state.js'
+import { state } from './assets/dataJs/state.js';
 
 export default {
 
@@ -11,17 +11,40 @@ export default {
     }
   },
 
+  methods: {
+    search() {
+      console.log(state.inputUser);
+      state.filterMovies()
+    }
+  },
+
   created() {
     state.getData();
   }
 
 
 }
-
 </script>
 
 <template>
-  <div class="h-100 w-100">ciaooo</div>
+  <div class="container">
+    <section class="input">
+      <input type="text" placeholder="Type a film name" v-model="state.inputUser" @keyup.enter="search()">
+      <button @click="search()">cerca</button>
+    </section>
+
+    <section class="list-movies">
+      <div class="film-card" v-for="film in state.listMovies">
+        <ul>
+          <li>titolo: {{ film.title }}</li>
+          <li>titolo originale {{ film.original_title }}</li>
+          <li>lingua: {{ film.original_language }}</li>
+          <li>voto: {{ film.vote_average }}</li>
+        </ul>
+
+      </div>
+    </section>
+  </div>
 </template>
 
 <style lang="scss" scoped>
