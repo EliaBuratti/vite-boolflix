@@ -14,7 +14,7 @@ export default {
   methods: {
     search() {
       console.log(state.inputUser);
-      state.filterTv()
+      state.filterTvMovies();
     }
   },
 
@@ -29,7 +29,8 @@ export default {
 <template>
   <div class="container">
     <section class="input">
-      <input type="text" placeholder="Type a film name" v-model="state.inputUser" @keyup.enter="search()">
+      <input style="width: 40%;" type="text" placeholder="Type a Film or series tv name" v-model="state.inputUser"
+        @keyup.enter="search()">
       <button @click="search()">cerca</button>
     </section>
 
@@ -37,12 +38,12 @@ export default {
       <div class="film-card" v-for="film in state.listMovies">
         <ul>
           <li>titolo: {{ film.title }}</li>
-          <li>titolo originale {{ film.original_title }}</li>
-          <li>lingua: {{ film.original_language }}</li>
-          <li>bandiera: <img v-if="state.getFlag(film.original_language)" :src="state.getFlag(film.original_language)">
+          <li>titolo originale: {{ film.originalTitle }}</li>
+          <li>lingua: {{ film.language }}</li>
+          <li>bandiera: <img v-if="state.getFlag(film.language)" :src="state.getFlag(film.language)">
             <img v-else src="./assets/img/Missing_flag.png" alt="no flag">
           </li>
-          <li>voto: {{ film.vote_average }}</li>
+          <li>voto: {{ film.vote }}</li>
         </ul>
 
       </div>

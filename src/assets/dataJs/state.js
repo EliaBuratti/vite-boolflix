@@ -28,7 +28,16 @@ export const state = reactive({
             .then(response => {
                 console.log(response.data.results);
 
-                this.listMovies = response.data.results
+                response.data.results.forEach(element => {
+
+                    this.listMovies.push(
+                        {
+                            title: element.title,
+                            originalTitle: element.original_title,
+                            language: element.original_language,
+                            vote: this.ratingStar(element.vote_average)
+                        })
+                });
 
             })
 
@@ -54,20 +63,31 @@ export const state = reactive({
         })
 
             .then(response => {
-                console.log(response.data.results);
 
-                this.listMovies = response.data.results
+                this.listMovies = [];
+                response.data.results.forEach(element => {
+
+                    this.listMovies.push(
+                        {
+                            title: element.title,
+                            originalTitle: element.original_title,
+                            language: element.original_language,
+                            vote: this.ratingStar(element.vote_average)
+                        })
+                });
 
             })
 
             .catch(error => {
                 console.log(error);
             })
+        console.log(this.listMovies);
     },
 
-    filterTv() {
-        /* this.filterMovies() se metto questa funzione 
-        e aggiungo tramite +=    this.listMovies += response.data.results  ottengo la lista di film e sere tv*/
+    filterTvMovies() {
+
+        this.filterMovies()
+
         axios.get(this.tv_filter_url, {
             params: {
                 api_key: this.apiKey,
@@ -85,18 +105,32 @@ export const state = reactive({
 
             .then(response => {
                 console.log(response.data.results);
-                this.listMovies = [];
 
-                this.listMovies = response.data.results
+                response.data.results.forEach(element => {
 
+                    this.listMovies.push(
+                        {
+                            title: element.name,
+                            originalTitle: element.original_name,
+                            language: element.original_language,
+                            vote: this.ratingStar(element.vote_average)
+                        })
+                })
+                console.log(this.listMovies);
             })
 
             .catch(error => {
                 console.log(error);
             })
-        console.log(this.listMovies);
 
     },
+
+    ratingStar(vote) {
+
+        return Number(Math.ceil(vote / 2));
+
+    },
+
     getFlag(lang) {
         let flagLink;
         switch (lang) {
