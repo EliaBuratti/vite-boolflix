@@ -1,5 +1,5 @@
 <script>
-//import { state } from './assets/dataJs/state'
+import { state } from '../src/assets/dataJs/state.js'
 
 export default {
 
@@ -7,8 +7,12 @@ export default {
 
   data() {
     return {
-      //state,
+      state,
     }
+  },
+
+  created() {
+    state.getData();
   }
 
 
