@@ -6,17 +6,13 @@ export const state = reactive({
     movies_filter_url: 'https://api.themoviedb.org/3/search/movie',
     tv_filter_url: 'https://api.themoviedb.org/3/search/tv',
     apiKey: '3117d9c7925ae74b7825993a59373499',
+
+    path_image: 'https://image.tmdb.org/t/p/w342',
     listMovies: [],
     inputUser: '',
     adultContent: false,
     language: 'en-US',
     pageNum: 1,
-
-    //'https://api.themoviedb.org/3/search/movie?query=rit&include_adult=false&language=all&page=1'
-    //search_movies_url: 'https://api.themoviedb.org/3/search/movie',
-
-
-    //base_url: 'https://api.themoviedb.org/3/movie/11?api_key=3117d9c7925ae74b7825993a59373499'
 
     getData() {
         axios.get(this.base_url, {
@@ -32,10 +28,11 @@ export const state = reactive({
 
                     this.listMovies.push(
                         {
+                            image: this.checkPath(element.poster_path),
                             title: element.title,
                             originalTitle: element.original_title,
                             language: element.original_language,
-                            vote: this.ratingStar(element.vote_average)
+                            vote: this.ratingStar(element.vote_average),
                         })
                 });
 
@@ -69,6 +66,7 @@ export const state = reactive({
 
                     this.listMovies.push(
                         {
+                            image: this.checkPath(element.poster_path),
                             title: element.title,
                             originalTitle: element.original_title,
                             language: element.original_language,
@@ -110,6 +108,7 @@ export const state = reactive({
 
                     this.listMovies.push(
                         {
+                            image: this.checkPath(element.poster_path),
                             title: element.name,
                             originalTitle: element.original_name,
                             language: element.original_language,
@@ -128,6 +127,16 @@ export const state = reactive({
     ratingStar(vote) {
 
         return Number(Math.ceil(vote / 2));
+
+    },
+
+    checkPath(path) {
+
+        if (path) {
+            return this.path_image + path
+        } else {
+            return path
+        }
 
     },
 

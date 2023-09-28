@@ -40,10 +40,15 @@ export default {
           <li>titolo: {{ film.title }}</li>
           <li>titolo originale: {{ film.originalTitle }}</li>
           <li>lingua: {{ film.language }}</li>
-          <li>bandiera: <img v-if="state.getFlag(film.language)" :src="state.getFlag(film.language)">
+          <li>bandiera:
+            <img v-if="state.getFlag(film.language)" :src="state.getFlag(film.language)">
             <img v-else src="./assets/img/Missing_flag.png" alt="no flag">
           </li>
           <li>voto: {{ film.vote }}</li>
+          <li>
+            <img v-if="film.image" :src="film.image">
+            <img v-else src="./assets/img/no-image.jpg" alt="no image">
+          </li>
         </ul>
 
       </div>
