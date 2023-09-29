@@ -20,6 +20,7 @@ export default {
 
   methods: {
     search() {
+      state.result = '';
       if (state.inputUser === '' || state.inputUser === ' ') {
         state.listMovies = [];
         state.getData();
@@ -28,7 +29,9 @@ export default {
         state.filterTvMovies();
       }
       console.log(state.inputUser);
+      state.result = state.inputUser;
       state.inputUser = '';
+
     }
   },
   created() {
@@ -45,11 +48,12 @@ export default {
   <div class="eb_app">
     <div class="eb_app_container rounded-3 overflowx-hidden overflow-y-auto">
 
+      <!-- header section -->
       <section class="nav_bar">
         <NavBar @search-query="search" />
       </section>
 
-
+      <!-- main section -->
       <section class="list-movies mt-4 ">
         <CardAlbum />
 
@@ -78,9 +82,5 @@ export default {
     height: 90vh;
   }
 
-  /*   .list-movies {
-    overflow-y: scroll;
-    overflow-x: hidden;
-  } */
 }
 </style>

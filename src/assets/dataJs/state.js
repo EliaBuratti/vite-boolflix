@@ -10,6 +10,7 @@ export const state = reactive({
     path_image: 'https://image.tmdb.org/t/p/w342',
     listMovies: [],
     inputUser: '',
+    result: '',
     adultContent: false,
     language: 'en-US',
     pageNum: 1,
@@ -26,15 +27,7 @@ export const state = reactive({
 
                 response.data.results.forEach(element => {
 
-                    this.listMovies.push(
-                        {
-                            image: this.checkPath(element.poster_path),
-                            title: element.title,
-                            originalTitle: element.original_title,
-                            language: element.original_language,
-                            vote: this.ratingStar(element.vote_average),
-                            overview: element.overview,
-                        })
+                    this.listMovies.push((this.genListObj('movie', element)))
                 });
 
             })
@@ -62,18 +55,9 @@ export const state = reactive({
 
             .then(response => {
 
-                this.listMovies = [];
                 response.data.results.forEach(element => {
 
-                    this.listMovies.push(
-                        {
-                            image: this.checkPath(element.poster_path),
-                            title: element.title,
-                            originalTitle: element.original_title,
-                            language: element.original_language,
-                            vote: this.ratingStar(element.vote_average),
-                            overview: element.overview,
-                        })
+                    this.listMovies.push(this.genListObj('movie', element))
                 });
 
             })
@@ -85,6 +69,8 @@ export const state = reactive({
     },
 
     filterTvMovies() {
+
+        this.listMovies = [];
 
         this.filterMovies()
 
@@ -108,15 +94,7 @@ export const state = reactive({
 
                 response.data.results.forEach(element => {
 
-                    this.listMovies.push(
-                        {
-                            image: this.checkPath(element.poster_path),
-                            title: element.name,
-                            originalTitle: element.original_name,
-                            language: element.original_language,
-                            vote: this.ratingStar(element.vote_average),
-                            overview: element.overview,
-                        })
+                    this.listMovies.push(this.genListObj('tv', element))
                 })
                 console.log(this.listMovies);
             })
@@ -162,11 +140,46 @@ export const state = reactive({
                 flagLink = false;
                 break;
 
+            case 'sh':
+                flagLink = false;
+                break;
+
             default:
                 flagLink = `https://www.unknown.nu/flags/images/${lang}-100`;
 
         }
 
         return flagLink;
+    },
+
+    genListObj(typeGender, element) {
+        switch (typeGender) {
+            case 'tv':
+                return {
+                    image: this.checkPath(element.poster_path),
+                    title: element.name,
+                    originalTitle: element.original_name,
+                    language: element.original_language,
+                    vote: this.ratingStar(element.vote_average),
+                    overview: element.overview,
+                }
+
+                break;
+
+            case 'movie':
+                return {
+                    image: this.checkPath(element.poster_path),
+                    title: element.title,
+                    originalTitle: element.original_title,
+                    language: element.original_language,
+                    vote: this.ratingStar(element.vote_average),
+                    overview: element.overview,
+                }
+
+                break;
+
+            default:
+                break;
+        }
     }
 })

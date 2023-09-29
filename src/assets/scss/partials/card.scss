@@ -33,19 +33,25 @@
 }
 
 .flip-card-front {
-    color: black;
+    background-color: $color-netflix-lg-dark;
+    color: $color-netflix-white;
 
     img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: $border-rad;
+
     }
+
+
 }
 
 .flip-card-back {
-    background-color: palevioletred;
-    color: black;
+    background-image: linear-gradient(to bottom, $color-netflix 1rem, $color-netflix 3rem, $color-netflix-dark 100%, $color-netflix-dark 100%);
+    color: $color-netflix-white;
     transform: rotateY(180deg);
-    border-radius: $border-rad;
+
+    .eb_language img {
+        width: 2rem;
+    }
 }

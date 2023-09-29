@@ -19,11 +19,14 @@ export default {
 <template>
     <nav class="navbar eb_bg rounded-top-3 p-0">
         <div class="container-fluid">
+
+            <!-- logo BoolFlix -->
             <div class="logo">
                 <a class="eb_logo">
                     <svg id="eFifE5j2u" viewBox="0 0 450 215" height="215" width="450"
                         style="width: 160px; height: auto; cursor: pointer;">
-                        <defs id="SvgjsDefs1118"></defs>
+                        <defs id="SvgjsDefs1118">
+                        </defs>
                         <g id="SvgjsG1120" featurekey="nameFeature-0"
                             transform="matrix(3.390388425593253,0,0,3.390388425593253,49.90029391490935,26.50479470890344)"
                             fill="#fff">
@@ -34,11 +37,14 @@ export default {
                     </svg>
                 </a>
             </div>
+
+            <!-- input search -->
             <section class="input d-flex ">
                 <input class="form-control me-2" type="text" placeholder="Search a Film or series Tv"
                     v-model="state.inputUser" @keyup.enter="$emit('searchQuery')">
                 <button class="btn btn-warning" @click="$emit('searchQuery')">cerca</button>
             </section>
+
         </div>
     </nav>
 </template>
