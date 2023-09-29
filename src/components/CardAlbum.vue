@@ -1,12 +1,14 @@
 <script>
 import { state } from '../assets/dataJs/state';
-import Card from './Card.vue';
+import Card from './Card.vue'; // se lo slider funge da togliere
+import CarouselSlider from './CarouselSlider.vue';
 
 export default {
     name: 'CardAlbum',
 
     components: {
         Card,
+        CarouselSlider,
     },
 
     data() {
@@ -27,6 +29,9 @@ export default {
 
             <!-- film e serie tv trovate -->
             <Card v-else v-for="film in state.listMovies" :film="film" />
+
+            <!-- funzionaaa -->
+            <CarouselSlider />
         </div>
     </div>
 </template>
@@ -37,5 +42,6 @@ export default {
 
 h2 {
     color: $color-netflix-white;
+    padding-left: 0.5rem;
 }
 </style>

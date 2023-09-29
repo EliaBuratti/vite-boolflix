@@ -24,6 +24,7 @@ export default {
       if (state.inputUser === '' || state.inputUser === ' ') {
         state.listMovies = [];
         state.getData();
+        state.inputUser = 'I film migliori della settimana'
 
       } else {
         state.filterTvMovies();
@@ -36,6 +37,7 @@ export default {
   },
   created() {
     state.getData();
+    state.result = 'I film migliori della settimana'
   }
 
 

@@ -1,19 +1,33 @@
 import { reactive } from 'vue';
+import { carousel } from './carousel';
 import axios from 'axios';
 
 export const state = reactive({
+
+    data() {
+        return {
+            carousel,
+        }
+    },
     base_url: 'https://api.themoviedb.org/3/trending/movie/week?language=en-US',
     movies_filter_url: 'https://api.themoviedb.org/3/search/movie',
     tv_filter_url: 'https://api.themoviedb.org/3/search/tv',
     apiKey: '3117d9c7925ae74b7825993a59373499',
 
     path_image: 'https://image.tmdb.org/t/p/w342',
+
     listMovies: [],
-    inputUser: '',
-    result: '',
+    inputUser: '', //testo che digita l'utente
+    result: '', //testo che digita l'utente senza aggiornarsi di continuo
+
+    //parametri de la ricerca del film o serie tv
     adultContent: false,
     language: 'en-US',
     pageNum: 1,
+
+    //array diviso in pagine 12 risultati per pagina
+    listMovieSlice: [],
+
 
     getData() { //trending movies
         axios.get(this.base_url, {
@@ -30,11 +44,13 @@ export const state = reactive({
                     this.listMovies.push((this.genListObj('movie', element)))
                 });
 
+                carousel.sliceObj();
             })
 
             .catch(error => {
                 console.log(error);
             })
+
     },
 
     filterMovies() {
@@ -71,6 +87,7 @@ export const state = reactive({
     filterTvMovies() {
 
         this.listMovies = [];
+        this.listMovieSlice = [];
 
         this.filterMovies()
 
@@ -97,6 +114,9 @@ export const state = reactive({
                     this.listMovies.push(this.genListObj('tv', element))
                 })
                 console.log(this.listMovies);
+
+                carousel.sliceObj();
+
             })
 
             .catch(error => {
@@ -144,6 +164,10 @@ export const state = reactive({
                 flagLink = false;
                 break;
 
+            case 'ml':
+                flagLink = false;
+                break;
+
             default:
                 flagLink = `https://www.unknown.nu/flags/images/${lang}-100`;
 
@@ -181,5 +205,8 @@ export const state = reactive({
             default:
                 break;
         }
-    }
+    },
+
+
+
 })
