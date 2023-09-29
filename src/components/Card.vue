@@ -17,17 +17,17 @@ export default {
 }
 </script>
 <template>
-    <div class="col-4 p-2">
+    <div class="col-2 p-2 ">
         <div class="list_film">
 
-            <div class="flip-card">
+            <div class="flip-card ">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front">
+                    <div class="flip-card-front overflow-hidden rounded-3">
                         <img v-if="film.image" :src="film.image">
                         <span v-else>
                             <h3 v-if="film.title === film.originalTitle">{{ film.originalTitle }}</h3>
                             <h3 v-else>{{ film.title }}</h3>
-                            <img src="../assets/img/no-image.jpg" alt="no image">
+                            <img src="../assets/img/no-image.jpg" class="object-fit-contain" alt="no image">
                         </span>
                     </div>
                     <div class="film_info flip-card-back">

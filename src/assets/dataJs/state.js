@@ -14,7 +14,7 @@ export const state = reactive({
     language: 'en-US',
     pageNum: 1,
 
-    getData() {
+    getData() { //trending movies
         axios.get(this.base_url, {
             params: {
                 api_key: this.apiKey,
