@@ -34,8 +34,7 @@ export default {
                         <ul class="list-unstyled">
                             <li v-if="film.title === film.originalTitle">{{ film.originalTitle }}</li>
                             <li v-else>Titolo: {{ film.title }}</li>
-                            <li>Lingua: {{ film.language }}</li>
-                            <li>bandiera:
+                            <li>Lingua: {{ film.language }}
                                 <img v-if="state.getFlag(film.language)" :src="state.getFlag(film.language)">
                                 <img v-else src="../assets/img/Missing_flag.png" alt="no flag">
                             </li>
@@ -63,6 +62,8 @@ export default {
                                 </span>
 
                             </li>
+
+                            <li>Descrizione: {{ film.overview }}</li>
                         </ul>
 
                     </div>

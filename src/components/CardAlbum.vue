@@ -19,9 +19,15 @@ export default {
 }
 </script>
 <template>
-    <h2 v-if="state.listMovies.length === 0">Nessun risultato per la ricerca.</h2>
-    <Card v-else v-for="film in state.listMovies" :film="film" />
+    <div class="eb_album">
+        <div class="list_film d-flex flex-wrap">
+            <h2 v-if="state.listMovies.length === 0">Nessun risultato per la ricerca.</h2>
+            <Card v-else v-for="film in state.listMovies" :film="film" />
+        </div>
+    </div>
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@use '../assets/scss/partials/variables.scss' as *;
+</style>

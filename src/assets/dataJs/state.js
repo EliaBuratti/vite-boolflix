@@ -33,6 +33,7 @@ export const state = reactive({
                             originalTitle: element.original_title,
                             language: element.original_language,
                             vote: this.ratingStar(element.vote_average),
+                            overview: element.overview,
                         })
                 });
 
@@ -70,7 +71,8 @@ export const state = reactive({
                             title: element.title,
                             originalTitle: element.original_title,
                             language: element.original_language,
-                            vote: this.ratingStar(element.vote_average)
+                            vote: this.ratingStar(element.vote_average),
+                            overview: element.overview,
                         })
                 });
 
@@ -112,7 +114,8 @@ export const state = reactive({
                             title: element.name,
                             originalTitle: element.original_name,
                             language: element.original_language,
-                            vote: this.ratingStar(element.vote_average)
+                            vote: this.ratingStar(element.vote_average),
+                            overview: element.overview,
                         })
                 })
                 console.log(this.listMovies);

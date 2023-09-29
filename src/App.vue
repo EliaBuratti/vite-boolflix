@@ -43,14 +43,14 @@ export default {
 
 <template>
   <div class="eb_app">
-    <div class="eb_app_container ">
+    <div class="eb_app_container rounded-3 overflowx-hidden overflow-y-auto">
 
-      <section class="nav_bar mx-2">
+      <section class="nav_bar">
         <NavBar @search-query="search" />
       </section>
 
 
-      <section class="list-movies d-flex flex-wrap mt-4">
+      <section class="list-movies mt-4 ">
         <CardAlbum />
 
       </section>
@@ -62,20 +62,25 @@ export default {
 @use './assets/scss/app.scss' as *;
 @use './assets/scss/partials/variables.scss' as *;
 
+
 .eb_app {
   padding: 5vh 10vw;
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(to top, #960000 0, #960000 5rem, #2e2e2e 40%, #2e2e2e 60%);
+  background-image: linear-gradient(to top, $color-netflix 0, $color-netflix 5rem, $color-netflix-dark 40%, $color-netflix-dark 60%);
   animation: fadeInAnimation ease 1.5s;
   animation-iteration-count: 1;
   animation-fill-mode: backwards;
 
+
   .eb_app_container {
     width: 80vw;
     height: 90vh;
-    overflow-y: auto;
-    overflow-x: hidden;
   }
+
+  /*   .list-movies {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  } */
 }
 </style>
