@@ -21,7 +21,20 @@ export default {
 </script>
 <template>
     <!-- manca tutto il file html da rifare!!! -->
-    <Card v-for="film in state.listMovies" :film="film" />
+
+    <div class="container ">
+        <div class="slider-wrapper" tabindex="0" @mouseover="stopPlay" @mouseleave="slidePlay">
+
+
+            <div class="item d-flex flex-wrap">
+                <Card v-for="film in state.listMovieSlice[carousel.activeImage]" :film="film" />
+            </div>
+
+
+
+
+        </div>
+    </div>
 </template>
 
 

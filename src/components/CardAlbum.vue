@@ -1,5 +1,6 @@
 <script>
 import { state } from '../assets/dataJs/state';
+import { carousel } from '../assets/dataJs/carousel';
 import Card from './Card.vue'; // se lo slider funge da togliere
 import CarouselSlider from './CarouselSlider.vue';
 
@@ -14,6 +15,7 @@ export default {
     data() {
         return {
             state,
+            carousel,
         }
     },
 
@@ -22,16 +24,18 @@ export default {
 </script>
 <template>
     <div class="eb_album">
-        <h2 v-if="state.listMovies.length > 0 && state.result.length > 0">Ecco i risultati per: {{ state.result }}</h2>
-        <div class="list_film d-flex flex-wrap">
+
+        <div class="info d-flex justify-content-between">
+            <h2 v-if="state.listMovies.length > 0 && state.result.length > 0">Ecco i risultati per: {{ state.result }}</h2>
+            <h2>Pagina: {{ carousel.activeImage + 1 }} di {{ state.listMovieSlice.length }}</h2>
+        </div>
+        <div class="list_film d-flex flex-wrap ">
 
             <h2 v-if="state.listMovies.length === 0">Nessun risultato per la ricerca.</h2>
 
-            <!-- film e serie tv trovate -->
-            <Card v-else v-for="film in state.listMovies" :film="film" />
-
-            <!-- funzionaaa -->
             <CarouselSlider />
+
+
         </div>
     </div>
 </template>

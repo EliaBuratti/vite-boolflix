@@ -9,7 +9,6 @@ export const carousel = reactive({
         }
     },
 
-    autoplay: true,
     activeImage: 0,
 
     //divido l'array di oggetti in pagine da 12
@@ -35,7 +34,7 @@ export const carousel = reactive({
     //slider
     next() {
         this.activeImage++;
-        if (this.activeImage > this.slides.length - 1) {
+        if (this.activeImage > state.listMovieSlice.length - 1) {
             this.activeImage = 0;
         }
     },
@@ -43,22 +42,10 @@ export const carousel = reactive({
     prev() {
         this.activeImage--;
         if (this.activeImage < 0) {
-            this.activeImage = this.slides.length - 1
+            this.activeImage = state.listMovieSlice.length - 1
         };
         console.log(this.activeImage);
 
-    },
-
-    activeThumb(index) {
-        return `thumb ${this.activeImage === index - 1 ? 'active' : ''} `
-    },
-
-    slidePlay() {
-        this.auto = setInterval(this.next, 1000);
-    },
-
-    stopPlay() {
-        clearInterval(this.auto);
     },
 
 })
