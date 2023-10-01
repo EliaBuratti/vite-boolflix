@@ -80,6 +80,8 @@ export default {
                             </li>
                         </ul>
 
+                        <button @click="state.creditsUrl(film.id)">More Info</button>
+
                     </div>
                 </div>
             </div>

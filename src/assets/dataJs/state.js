@@ -29,6 +29,15 @@ export const state = reactive({
     listMovieSlice: [],
 
 
+
+    /* -----------------------------------------  da implementare */
+    //array attori film + serie tv
+    actorMovie: [],
+    actotSeriesTv: [],
+    genreSelection: '',
+    /* ------------------------------------------------------------------ */
+
+
     getData() { //trending movies
         axios.get(this.base_url, {
             params: {
@@ -107,15 +116,43 @@ export const state = reactive({
         })
 
             .then(response => {
-                console.log(response.data.results);
+                //console.log(response.data.results);
 
                 response.data.results.forEach(element => {
 
+                    console.log(element);
                     this.listMovies.push(this.genListObj('tv', element))
                 })
                 console.log(this.listMovies);
 
                 carousel.sliceObj();
+
+            })
+
+            .catch(error => {
+                console.log(error);
+            })
+
+    },
+
+    creditsUrl(numID) {
+
+        const credits_url = `https://api.themoviedb.org/3/movie/${numID}/credits` /* movie credits*/
+        /* https://api.themoviedb.org/3/person/{person_id}/tv_credits  series tv credits da unire nelle funzioni */
+        axios.get(credits_url, {
+            params: {
+                api_key: this.apiKey,
+            }
+        })
+
+            .then(response => {
+
+                console.log(response.data.cast.slice(0, 5));
+
+                /*                 response.data.results.forEach(element => {
+                
+                                    this.listMovies.push(this.genListObj('movie', element))
+                                }); */
 
             })
 
@@ -186,6 +223,7 @@ export const state = reactive({
                     language: element.original_language,
                     vote: this.ratingStar(element.vote_average),
                     overview: element.overview,
+                    id: element.id,
                 }
 
                 break;
@@ -198,6 +236,7 @@ export const state = reactive({
                     language: element.original_language,
                     vote: this.ratingStar(element.vote_average),
                     overview: element.overview,
+                    id: element.id,
                 }
 
                 break;

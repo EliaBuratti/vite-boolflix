@@ -50,6 +50,17 @@ export default {
 
 <template>
   <div class="eb_app position-relative">
+
+    <!-- info film -->
+
+    <div class="eb_more_info d-none">
+
+      <!-- modal -->
+
+      <div class="eb_modal">
+        <h3>ciaooo</h3>
+      </div>
+    </div>
     <div class="eb_app_container rounded-3 overflow-x-hidden overflow-y-auto ">
 
       <!-- header section -->
@@ -106,6 +117,25 @@ export default {
   .eb_app_container {
     width: 80vw;
     height: 90vh;
+  }
+
+  .eb_more_info {
+    position: absolute;
+    z-index: 99999999;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    color: white;
+    background-color: rgba(0, 128, 0, 0.413);
+
+    .eb_modal {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, 50%);
+
+    }
   }
 
 }
