@@ -21,7 +21,7 @@ export default {
         <div class="container-fluid">
 
             <!-- logo BoolFlix -->
-            <div class="logo">
+            <div class="logo" @click="state.getData()">
                 <a class="eb_logo">
                     <svg id="eFifE5j2u" viewBox="0 0 450 215" height="215" width="450"
                         style="width: 160px; height: auto; cursor: pointer;">

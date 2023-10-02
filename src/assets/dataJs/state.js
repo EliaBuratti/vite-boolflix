@@ -4,7 +4,8 @@ import axios from 'axios';
 export const state = reactive({
 
 
-    base_url: 'https://api.themoviedb.org/3/trending/movie/week?language=en-US',
+    trending_movie_url: 'https://api.themoviedb.org/3/trending/movie/week?language=en-US',
+    trending_seriesTv_url: 'https://api.themoviedb.org/3/trending/tv/week?language=en-US',
     movies_filter_url: 'https://api.themoviedb.org/3/search/movie',
     tv_filter_url: 'https://api.themoviedb.org/3/search/tv',
     apiKey: '3117d9c7925ae74b7825993a59373499',
@@ -26,13 +27,13 @@ export const state = reactive({
     /* -----------------------------------------  da implementare */
     //array attori film + serie tv
     actorMovie: [],
-    actotSeriesTv: [],
-    genreSelection: '',
+    actorSeriesTv: [],
+    modalInfo: false,
     /* ------------------------------------------------------------------ */
 
 
-    getData() { //trending movies
-        axios.get(this.base_url, {
+    getData() { //trending movies 
+        axios.get(this.trending_movie_url, {
             params: {
                 api_key: this.apiKey,
             }
@@ -48,6 +49,28 @@ export const state = reactive({
             .catch(error => {
                 console.log(error);
             })
+
+        // trending series
+
+        axios.get(this.trending_seriesTv_url, {
+            params: {
+                api_key: this.apiKey,
+            }
+        })
+
+            .then(response => {
+
+                this.listSeries = response.data;
+
+
+            })
+
+            .catch(error => {
+                console.log(error);
+            })
+
+        this.result = '';
+        this.inputUser = '';
 
     },
 
@@ -117,28 +140,48 @@ export const state = reactive({
 
     creditsUrl(numID) {
 
-        const credits_url = `https://api.themoviedb.org/3/movie/${numID}/credits` /* movie credits*/
-        /* https://api.themoviedb.org/3/person/{person_id}/tv_credits  series tv credits da unire nelle funzioni */
-        axios.get(credits_url, {
-            params: {
-                api_key: this.apiKey,
-            }
-        })
+        const credits_movie_url = `https://api.themoviedb.org/3/movie/${numID}/credits` /* movie credits*/
+        const credits_series_url = `https://api.themoviedb.org/3/tv/${numID}/credits` /* https://api.themoviedb.org/3/person/{person_id}/tv_credits  series tv credits da unire nelle funzioni */
 
-            .then(response => {
-
-                console.log(response.data.cast.slice(0, 5));
-
-                /*                 response.data.results.forEach(element => {
-                
-                                    this.listMovies.push(this.genListObj('movie', element))
-                                }); */
-
+        if (this.filterPage === 1) {
+            axios.get(credits_movie_url, {
+                params: {
+                    api_key: this.apiKey,
+                }
             })
 
-            .catch(error => {
-                console.log(error);
+                .then(response => {
+
+                    console.log(response.data.cast.slice(0, 5));
+
+                    this.actorMovie = response.data.cast.slice(0, 5)
+
+                })
+
+                .catch(error => {
+                    console.log(error);
+                })
+
+        } else {
+
+            axios.get(credits_series_url, {
+                params: {
+                    api_key: this.apiKey,
+                }
             })
+                .then(response => {
+
+                    console.log(response.data.cast.slice(0, 5));
+
+                    this.actorSeriesTv = response.data.cast.slice(0, 5);
+
+                })
+
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+
 
     },
 

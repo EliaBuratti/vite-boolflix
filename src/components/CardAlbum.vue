@@ -21,14 +21,19 @@ export default {
 <template>
     <div class="eb_album">
 
-        <div class="info d-flex justify-content-between">
-            <h2 v-if="state.listMovies.length > 0 && state.result.length > 0">Ecco i risultati per: {{ state.result }}</h2>
+        <div class="info d-flex align-items-center">
 
-            <span class="d-flex">
-                <h2 class="bg-primary" @click="state.filterPage = 2">Series Tv</h2>
-                <h2 class=" ms-2 bg-secondary" @click="state.filterPage = 1">Movies</h2>
+            <h2 v-if="state.listMovies != [] && state.result.length > 0">Ecco i risultati per: {{
+                state.result }}</h2>
 
+            <span class="ms-auto d-flex">
+                <h2 class="ms-2 p-3 rounded-3" :class="state.filterPage === 2 ? 'active' : ''"
+                    @click="state.filterPage = 2">Series Tv</h2>
+                <h2 class=" ms-2 p-3 rounded-3" :class="state.filterPage === 1 ? 'active' : ''"
+                    @click="state.filterPage = 1">Movies</h2>
             </span>
+
+
 
         </div>
         <div class="list_film d-flex flex-wrap ">
@@ -72,5 +77,15 @@ export default {
 h2 {
     color: $color-netflix-white;
     padding-left: 0.5rem;
+}
+
+span {
+    h2 {
+        cursor: pointer;
+    }
+
+    .active {
+        background-color: $color-netflix-lg-dark;
+    }
 }
 </style>
