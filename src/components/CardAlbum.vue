@@ -47,7 +47,8 @@ export default {
                 <div v-if="state.filterPage === 1" class="item d-flex flex-wrap">
                     <Card v-for="movie in state.listMovies.results" :image="state.checkPath(movie.poster_path)"
                         :title="movie.title" :originalTitle="movie.original_title" :language="movie.original_language"
-                        :vote="state.ratingStar(movie.vote_average)" :overview="movie.overview" :id="movie.id" />
+                        :vote="state.ratingStar(movie.vote_average)" :overview="movie.overview" :id="movie.id"
+                        :genre="movie.genre_ids" />
                 </div>
 
                 <!-- series tv -->
@@ -55,7 +56,8 @@ export default {
                 <div v-else class="item d-flex flex-wrap">
                     <Card v-for="tvShow in state.listSeries.results" :image="state.checkPath(tvShow.poster_path)"
                         :title="tvShow.name" :originalTitle="tvShow.original_name" :language="tvShow.original_language"
-                        :vote="state.ratingStar(tvShow.vote_average)" :overview="tvShow.overview" :id="tvShow.id" />
+                        :vote="state.ratingStar(tvShow.vote_average)" :overview="tvShow.overview" :id="tvShow.id"
+                        :genre="tvShow.genre_ids" />
                 </div>
 
 

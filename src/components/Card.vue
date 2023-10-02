@@ -12,6 +12,7 @@ export default {
         vote: Number,
         overview: String,
         id: Number,
+        genre: Array,
 
     },
 
@@ -87,7 +88,8 @@ export default {
                             </li>
                         </ul>
 
-                        <button @click="state.creditsUrl(id), state.modalInfo = true">More Info</button>
+                        <button class="btn btn-warning" @click="state.genres = genre; state.creditsUrl(id)">More
+                            Info</button>
 
                     </div>
                 </div>

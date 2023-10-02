@@ -8,6 +8,8 @@ export const state = reactive({
     trending_seriesTv_url: 'https://api.themoviedb.org/3/trending/tv/week?language=en-US',
     movies_filter_url: 'https://api.themoviedb.org/3/search/movie',
     tv_filter_url: 'https://api.themoviedb.org/3/search/tv',
+    genre_movie_url: 'https://api.themoviedb.org/3/genre/movie/list',
+    genre_series_url: 'https://api.themoviedb.org/3/genre/tv/list',
     apiKey: '3117d9c7925ae74b7825993a59373499',
 
     path_image: 'https://image.tmdb.org/t/p/w342',
@@ -24,12 +26,16 @@ export const state = reactive({
     pageNumMovies: 1,
     pageNumSeries: 1,
 
-    /* -----------------------------------------  da implementare */
+
     //array attori film + serie tv
-    actorMovie: [],
-    actorSeriesTv: [],
+    actors: [],
     modalInfo: false,
-    /* ------------------------------------------------------------------ */
+
+    //lista generi serie tv e film
+    genre_movies: [],
+    genre_series: [],
+    genres: [],
+    genresName: [],
 
 
     getData() { //trending movies 
@@ -139,6 +145,7 @@ export const state = reactive({
     },
 
     creditsUrl(numID) {
+        this.modalInfo = true;
 
         const credits_movie_url = `https://api.themoviedb.org/3/movie/${numID}/credits` /* movie credits*/
         const credits_series_url = `https://api.themoviedb.org/3/tv/${numID}/credits` /* https://api.themoviedb.org/3/person/{person_id}/tv_credits  series tv credits da unire nelle funzioni */
@@ -154,7 +161,7 @@ export const state = reactive({
 
                     console.log(response.data.cast.slice(0, 5));
 
-                    this.actorMovie = response.data.cast.slice(0, 5)
+                    this.actors = response.data.cast.slice(0, 5)
 
                 })
 
@@ -173,7 +180,7 @@ export const state = reactive({
 
                     console.log(response.data.cast.slice(0, 5));
 
-                    this.actorSeriesTv = response.data.cast.slice(0, 5);
+                    this.actors = response.data.cast.slice(0, 5);
 
                 })
 
@@ -182,8 +189,76 @@ export const state = reactive({
                 })
         }
 
+        this.genreFiltered();
+
 
     },
+
+    genrelist() {
+
+        // lista generi film
+        axios.get(this.genre_movie_url, {
+            params: {
+                api_key: this.apiKey,
+            }
+        })
+
+            .then(response => {
+
+                this.genre_movies = response.data.genres;
+
+
+            })
+
+            .catch(error => {
+                console.log(error);
+            })
+
+
+        // lista generi serie tv
+        axios.get(this.genre_series_url, {
+            params: {
+                api_key: this.apiKey,
+            }
+        })
+
+            .then(response => {
+
+                this.genre_series = response.data.genres;
+
+
+            })
+
+            .catch(error => {
+                console.log(error);
+            })
+
+
+    },
+
+    genreFiltered() {
+        this.genresName = [];
+        console.log(this.genres);
+
+        let typeGenre;
+        if (this.filterPage === 1) {
+            typeGenre = this.genre_movies;
+        } else {
+            typeGenre = this.genre_series;
+        }
+
+        for (let i = 0; i < typeGenre.length; i++) {
+            typeGenre.forEach(element => {
+                if (element.id === this.genres[i]) {
+                    console.log(element.name);
+                    this.genresName.push(element.name);
+                }
+
+            });
+        }
+
+    },
+
 
     ratingStar(vote) {
 

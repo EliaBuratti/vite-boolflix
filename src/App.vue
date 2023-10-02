@@ -2,7 +2,8 @@
 import { state } from './assets/dataJs/state.js';
 import CardAlbum from './components/CardAlbum.vue';
 import NavBar from './components/NavBar.vue';
-import FunctionButton from './components/FunctionButton.vue'
+import FunctionButton from './components/FunctionButton.vue';
+import Modal from './components/Modal.vue';
 export default {
 
   name: 'App',
@@ -11,6 +12,7 @@ export default {
     CardAlbum,
     NavBar,
     FunctionButton,
+    Modal,
   },
 
   data() {
@@ -37,6 +39,7 @@ export default {
   },
   created() {
     state.getData();
+    state.genrelist();
   }
 
 
@@ -49,15 +52,8 @@ export default {
   <div class="eb_app position-relative overflow-hidden">
 
     <!-- info film -->
+    <Modal />
 
-    <div v-if="state.modalInfo" class="eb_more_info">
-
-      <!-- modal -->
-
-      <div class="eb_modal">
-        <h3> gli attori sono: {{ }}</h3>
-      </div>
-    </div>
     <div class="eb_app_container rounded-3 overflow-x-hidden overflow-y-auto ">
 
       <!-- header section -->
@@ -75,6 +71,7 @@ export default {
 
     <!-- nex e prev page button -->
     <FunctionButton />
+
 
   </div>
 </template>
@@ -99,27 +96,6 @@ export default {
     width: 80vw;
     height: 90vh;
   }
-
-  .eb_more_info {
-    position: absolute;
-    z-index: 99999999;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    color: white;
-    background-color: rgba(0, 128, 0, 0.413);
-
-    .eb_modal {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, 50%);
-      background-color: red;
-
-    }
-  }
-
 
 
 
