@@ -1,6 +1,5 @@
 <script>
 import { state } from './assets/dataJs/state.js';
-import { carousel } from './assets/dataJs/carousel';
 import CardAlbum from './components/CardAlbum.vue';
 import NavBar from './components/NavBar.vue';
 
@@ -16,7 +15,6 @@ export default {
   data() {
     return {
       state,
-      carousel,
     }
   },
 
@@ -29,11 +27,11 @@ export default {
         state.inputUser = 'I film migliori della settimana'
 
       } else {
-        state.filterTvMovies();
+        state.filterSeries();
+        state.filterMovies();
       }
       console.log(state.inputUser);
       state.result = state.inputUser;
-      state.inputUser = '';
 
     }
   },
@@ -78,7 +76,7 @@ export default {
 
     <!-- nex e prev page button -->
     <div class="function-button d-flex justify-content-center">
-      <div class="prev" @click="carousel.prev()">
+      <div class="prev" @click="state.prev()">
         <svg xmlns="http://www.w3.org/2000/svg" height="2em"
           viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
           <path
@@ -86,7 +84,7 @@ export default {
         </svg>
       </div>
 
-      <div class="next" @click="carousel.next()">
+      <div class="next" @click="state.next()">
         <svg xmlns="http://www.w3.org/2000/svg" height="2em"
           viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
           <path
@@ -100,7 +98,6 @@ export default {
 <style lang="scss" scoped>
 @use './assets/scss/app.scss' as *;
 @use './assets/scss/partials/variables.scss' as *;
-@use './assets/scss/partials/carousel.scss';
 
 
 
@@ -136,6 +133,20 @@ export default {
       transform: translate(-50%, 50%);
 
     }
+  }
+
+  .function-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 999;
+  }
+
+  .next,
+  .prev {
+    padding: 1rem;
+    cursor: pointer;
   }
 
 }

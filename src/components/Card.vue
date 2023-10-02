@@ -5,7 +5,14 @@ export default {
     name: 'Card',
 
     props: {
-        film: Object,
+        image: String,
+        title: String,
+        originalTitle: String,
+        language: String,
+        vote: Number,
+        overview: String,
+        id: Number,
+
     },
 
     data() {
@@ -18,17 +25,17 @@ export default {
 }
 </script>
 <template>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 col-xxl-2 p-2 ">
+    <div class="col-12 col-sm-6 col-md-4 col-xl-3 p-2 ">
         <div class="list_film">
             <div class="flip-card ">
                 <div class="flip-card-inner">
 
                     <!-- copertina -->
                     <div class="flip-card-front overflow-hidden rounded-3">
-                        <img v-if="film.image" :src="film.image">
+                        <img v-if="image" :src="image">
                         <span v-else>
-                            <h3 v-if="film.title === film.originalTitle">{{ film.originalTitle }}</h3>
-                            <h3 v-else>{{ film.title }}</h3>
+                            <h3 v-if="title === originalTitle">{{ originalTitle }}</h3>
+                            <h3 v-else>{{ title }}</h3>
                             <img src="../assets/img/no-image.jpg" class="object-fit-contain rounded-3" alt="no image">
                         </span>
                     </div>
@@ -41,13 +48,13 @@ export default {
 
                             <!-- titolo film -->
                             <li>
-                                <h3 v-if="film.title === film.originalTitle">{{ film.originalTitle }}</h3>
-                                <h3 v-else>{{ film.title }}</h3>
+                                <h3 v-if="title === originalTitle">{{ originalTitle }}</h3>
+                                <h3 v-else>{{ title }}</h3>
                             </li>
 
                             <!-- lingua del film con bandiera -->
-                            <li class="eb_language">Lingua: {{ film.language }}
-                                <img v-if="state.getFlag(film.language)" :src="state.getFlag(film.language)">
+                            <li class="eb_language">Lingua: {{ language }}
+                                <img v-if="state.getFlag(language)" :src="state.getFlag(language)">
                                 <img v-else src="../assets/img/Missing_flag.png" alt="no flag">
                             </li>
 
@@ -55,7 +62,7 @@ export default {
                             <li> Voto:
 
                                 <!-- full stars -->
-                                <span v-for="fullStar in film.vote">
+                                <span v-for="fullStar in vote">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="0.875em" viewBox="0 0 576 512">
                                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                         <path
@@ -64,7 +71,7 @@ export default {
                                 </span>
 
                                 <!-- empty stars -->
-                                <span v-for="emptyStar in (5 - film.vote)">
+                                <span v-for="emptyStar in (5 - vote)">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="0.875em" viewBox="0 0 576 512">
                                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                         <path
@@ -76,11 +83,11 @@ export default {
 
                             <!-- descrizione del film -->
                             <li>
-                                Descrizione: {{ film.overview }}
+                                Descrizione: {{ overview }}
                             </li>
                         </ul>
 
-                        <button @click="state.creditsUrl(film.id)">More Info</button>
+                        <button @click="state.creditsUrl(id)">More Info</button>
 
                     </div>
                 </div>
