@@ -3,13 +3,10 @@ import axios from 'axios';
 
 export const state = reactive({
 
+    base_url: 'https://api.themoviedb.org/3',
 
-    trending_movie_url: 'https://api.themoviedb.org/3/trending/movie/week?language=en-US',
-    trending_seriesTv_url: 'https://api.themoviedb.org/3/trending/tv/week?language=en-US',
     movies_filter_url: 'https://api.themoviedb.org/3/search/movie',
     tv_filter_url: 'https://api.themoviedb.org/3/search/tv',
-    genre_movie_url: 'https://api.themoviedb.org/3/genre/movie/list',
-    genre_series_url: 'https://api.themoviedb.org/3/genre/tv/list',
     apiKey: '3117d9c7925ae74b7825993a59373499',
 
     path_image: 'https://image.tmdb.org/t/p/w342',
@@ -31,56 +28,63 @@ export const state = reactive({
     actors: [],
     modalInfo: false,
 
-    //lista generi serie tv e film
+    //lista generi delle serie tv e film
     genre_movies: [],
     genre_series: [],
-    genres: [],
-    genresName: [],
+    genres: [], //array con numeri dei generi del film/serie tv
+    genresName: [], //array con nomi dei generi del film/serie tv
 
 
-    getData() { //trending movies 
-        axios.get(this.trending_movie_url, {
-            params: {
-                api_key: this.apiKey,
-            }
-        })
+    getData() {
 
-            .then(response => {
-
-                this.listMovies = response.data;
-
-
+        Promise.all([this.getMovieTrend(), this.getSeriesTvTrend(), this.getMovieGen(), this.getSeriesTvGen()])
+            .then(([movieTr, seriesTr, movieGen, seriesGen]) => {
+                this.listMovies = movieTr.data;
+                this.listSeries = seriesTr.data;
+                this.genre_movies = movieGen.data.genres;
+                this.genre_series = seriesGen.data.genres;
             })
 
-            .catch(error => {
-                console.log(error);
-            })
-
-        // trending series
-
-        axios.get(this.trending_seriesTv_url, {
-            params: {
-                api_key: this.apiKey,
-            }
-        })
-
-            .then(response => {
-
-                this.listSeries = response.data;
-
-
-            })
-
-            .catch(error => {
-                console.log(error);
-            })
-
+        //svuoto i campi di ricerca e risultato della ricerca
         this.result = '';
         this.inputUser = '';
 
     },
 
-    filterMovies() {
+    getMovieTrend() {
+        return axios.get(this.base_url + '/trending/movie/week?language=en-US', {
+            params: {
+                api_key: this.apiKey,
+            }
+        });
+    },
+
+    getSeriesTvTrend() {
+        return axios.get(this.base_url + '/trending/tv/week?language=en-US', {
+            params: {
+                api_key: this.apiKey,
+            }
+        });
+    },
+
+    getMovieGen() {
+        return axios.get(this.base_url + '/genre/movie/list', {
+            params: {
+                api_key: this.apiKey,
+            }
+        });
+    },
+
+    getSeriesTvGen() {
+        return axios.get(this.base_url + '/genre/tv/list', {
+            params: {
+                api_key: this.apiKey,
+            }
+        })
+    },
+
+    filterMovies() { //creo una richiesta con il film richiesto dall'utente
+
         axios.get(this.movies_filter_url, {
             params: {
                 api_key: this.apiKey,
@@ -111,7 +115,7 @@ export const state = reactive({
             })
     },
 
-    filterSeries() {
+    filterSeries() { //creo una richiesta con le serie richieste dall'utente
         axios.get(this.tv_filter_url, {
             params: {
                 api_key: this.apiKey,
@@ -144,109 +148,57 @@ export const state = reactive({
             })
     },
 
-    creditsUrl(numID) {
-        this.modalInfo = true;
+    creditsUrl(numID) { //ottengo i crediti del film dall'id che mi viene passato
+        this.modalInfo = true;// faccio apparire la modale
 
         const credits_movie_url = `https://api.themoviedb.org/3/movie/${numID}/credits` /* movie credits*/
         const credits_series_url = `https://api.themoviedb.org/3/tv/${numID}/credits` /* https://api.themoviedb.org/3/person/{person_id}/tv_credits  series tv credits da unire nelle funzioni */
+        let genreUrl = '';
 
         if (this.filterPage === 1) {
-            axios.get(credits_movie_url, {
-                params: {
-                    api_key: this.apiKey,
-                }
-            })
-
-                .then(response => {
-
-                    console.log(response.data.cast.slice(0, 5));
-
-                    this.actors = response.data.cast.slice(0, 5)
-
-                })
-
-                .catch(error => {
-                    console.log(error);
-                })
+            genreUrl = credits_movie_url;
 
         } else {
-
-            axios.get(credits_series_url, {
-                params: {
-                    api_key: this.apiKey,
-                }
-            })
-                .then(response => {
-
-                    console.log(response.data.cast.slice(0, 5));
-
-                    this.actors = response.data.cast.slice(0, 5);
-
-                })
-
-                .catch(error => {
-                    console.log(error);
-                })
+            genreUrl = credits_series_url;
         }
+
+        axios.get(genreUrl, {
+            params: {
+                api_key: this.apiKey,
+            }
+        })
+
+            .then(response => {
+
+                console.log(response.data.cast.slice(0, 5));
+
+                this.actors = response.data.cast.slice(0, 5)
+
+            })
+
+            .catch(error => {
+                console.log(error);
+            })
 
         this.genreFiltered();
 
 
     },
 
-    genrelist() {
+    genreFiltered() { //tramite i numeri dell'array filtro i codici per ottenere il nome del genere
 
-        // lista generi film
-        axios.get(this.genre_movie_url, {
-            params: {
-                api_key: this.apiKey,
-            }
-        })
-
-            .then(response => {
-
-                this.genre_movies = response.data.genres;
-
-
-            })
-
-            .catch(error => {
-                console.log(error);
-            })
-
-
-        // lista generi serie tv
-        axios.get(this.genre_series_url, {
-            params: {
-                api_key: this.apiKey,
-            }
-        })
-
-            .then(response => {
-
-                this.genre_series = response.data.genres;
-
-
-            })
-
-            .catch(error => {
-                console.log(error);
-            })
-
-
-    },
-
-    genreFiltered() {
         this.genresName = [];
-        console.log(this.genres);
-
         let typeGenre;
+
+        //in base alla pagina visualizzata filtro per l'array corrispondente
         if (this.filterPage === 1) {
             typeGenre = this.genre_movies;
+
         } else {
             typeGenre = this.genre_series;
         }
 
+        //filtro tramite un cliclo for
         for (let i = 0; i < typeGenre.length; i++) {
             typeGenre.forEach(element => {
                 if (element.id === this.genres[i]) {

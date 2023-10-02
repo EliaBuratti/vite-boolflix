@@ -17,7 +17,7 @@ export default {
 }
 </script>
 <template>
-    <nav class="navbar eb_bg rounded-top-3 p-0 "> <!-- position-fixed w-auto -->
+    <nav class="navbar eb_bg rounded-top-3 p-0 mx-2">
         <div class="container-fluid">
 
             <!-- logo BoolFlix -->

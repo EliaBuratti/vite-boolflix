@@ -39,7 +39,6 @@ export default {
   },
   created() {
     state.getData();
-    state.genrelist();
   }
 
 

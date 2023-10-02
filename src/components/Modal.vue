@@ -67,5 +67,9 @@ export default {
 
 
     }
+
+    button {
+        color: $color-netflix-white;
+    }
 }
 </style>

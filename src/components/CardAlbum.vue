@@ -26,7 +26,7 @@ export default {
             <h2 v-if="state.listMovies != [] && state.result.length > 0">Ecco i risultati per: {{
                 state.result }}</h2>
 
-            <span class="ms-auto d-flex">
+            <span class="ms-auto d-flex mx-2">
                 <h2 class="ms-2 p-3 rounded-3" :class="state.filterPage === 2 ? 'active' : ''"
                     @click="state.filterPage = 2">Series Tv</h2>
                 <h2 class=" ms-2 p-3 rounded-3" :class="state.filterPage === 1 ? 'active' : ''"
